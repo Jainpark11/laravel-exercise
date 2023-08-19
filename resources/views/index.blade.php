@@ -8,7 +8,7 @@
                     <h4>All Posts</h4>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
-                    <a class="btn-sm btn-success" href="{{route('posts.create')}}">Create</a>
+                    <a class="btn-sm btn-success" href="{{ route('posts.create') }}">Create</a>
                     <a class="btn-sm btn-warning" href="">Trashed</a>
                 </div>
             </div>
@@ -27,24 +27,27 @@
                     </thead>
                     <tbody>
                         @foreach ($posts as $post)
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>
-                                <img src="https://picsum.photos/200" alt="" width="80">
-                            </td>
-                            <td>Lorem ipsum dolor</td>
-                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia est quod odit
-                                adipisci, numquam dignissimos, dolor architecto perferendis beatae sunt optio eligendi
-                                deleniti itaque animi nihil? Exercitationem architecto</td>
-                            <td>News</td>
-                            <td>2-5-23</td>
-                            <td>
-                                <a class="btn-sm btn-success btn" href="">보기</a>
-                                <a class="btn-sm btn-primary btn" href="">수정</a>
-                                <a class="btn-sm btn-danger btn" href="">삭제</a>
-                            </td>
+                            <tr>
+                                <th scope="row">{{ $post->id }}</th>
+                                <td>
+                                    <img src="{{ asset($post->image) }}" alt="" width="80">
+                                </td>
+                                <td>{{ $post->title }}</td>
+                                <td>{{ $post->description }}</td>
+                                <td>{{ $post->category_id }}</td>
+                                <td>{{ date('Y-m-d', strtotime($post->created_at)) }}</td>
+                                <td>
+                                    <a class="btn-sm btn-success btn" href="{{ route('posts.show', $post->id) }}">보기</a>
+                                    <a class="btn-sm btn-primary btn" href="{{ route('posts.edit', $post->id) }}">수정</a>
+                                    {{-- <a class="btn-sm btn-danger btn" href="">삭제</a> --}}
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn-sm btn-danger btn">삭제</button>
+                                    </form>
+                                </td>
 
-                        </tr>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

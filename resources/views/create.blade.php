@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="main-content mt-5">
+        @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">{{$error}}</div>
+                @endforeach
+            @endif
+
         <div class="card">
             <div class="card-header">
                 <div class="col-md-6">
@@ -12,11 +18,6 @@
                 </div>
             </div>
 
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger">{{$error}}</div>
-                @endforeach
-            @endif
             <div class="card-body">
                 <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
